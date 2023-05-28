@@ -6,8 +6,8 @@ const Navbar = () => {
     const navOptions = <>
         <li tabIndex={0}>
             <Link to='/'>Home</Link>
-            <Link to='menu'>our menu</Link>
-        <Link to='order'>order food</Link>
+            <Link to='/menu'>our menu</Link>
+        <Link to='/order/salad'>order food</Link>
         </li>
     </>
     return (
