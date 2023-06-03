@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -66,6 +67,7 @@ const SignUp = () => {
                 <input className="btn btn-primary" type="submit" value='sign up' />
               </div>
             </form>
+            <p><small>Already Have An Account <Link to='/login'>log in</Link></small></p>
           </div>
         </div>
       </div>
