@@ -1,6 +1,6 @@
 // import React from 'react';
 
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { FaShoppingCart, FaWallet, FaCalendarAlt, FaHome } from 'react-icons/fa';
 
 
@@ -14,18 +14,18 @@ const DashBoard = () => {
         <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side bg-[#D1A054]">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
+        <ul className="menu p-4 w-80 h-full">
           {/* Sidebar content here */}
-          <li><Link><FaHome></FaHome> user home</Link></li>
-          <li><Link><FaCalendarAlt></FaCalendarAlt> reservation</Link></li>
-          <li><Link><FaWallet></FaWallet> payment history</Link></li>
-          <li><Link><FaShoppingCart></FaShoppingCart> my card</Link></li>
+          <li><NavLink to='/dashboard/home'><FaHome></FaHome> user home</NavLink></li>
+          <li><NavLink to='/dashboard/reservation'><FaCalendarAlt></FaCalendarAlt> reservation</NavLink></li>
+          <li><NavLink to='/dashboard/history'><FaWallet></FaWallet> payment history</NavLink></li>
+          <li><NavLink to='/dashboard/mycard'><FaShoppingCart></FaShoppingCart> my card</NavLink></li>
           <div className="divider"></div>
-          <li><Link to='/'><FaHome></FaHome> home</Link></li>
-          <Link to='/menu'>our menu</Link>
-          <Link to='/order/salad'>order food</Link>
+          <li><NavLink to='/'><FaHome></FaHome> home</NavLink></li>
+          <NavLink to='/menu'>our menu</NavLink>
+          <NavLink to='/order/salad'>order food</NavLink>
         </ul>
 
       </div>
