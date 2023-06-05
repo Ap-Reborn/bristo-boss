@@ -11,6 +11,7 @@ import Secret from "../Pages/Shared/Secret/Secret";
 import PrivateRoute from "./PrivateRoute";
 import DashBoard from "../Layout/DashBoard";
 import MyCard from "../Pages/DashBoard/MyCard/MyCard";
+import AllUsers from "../Pages/DashBoard/MyCard/AllUsers/AllUsers";
 
   export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ import MyCard from "../Pages/DashBoard/MyCard/MyCard";
         {
           path:'mycard',
           element:<MyCard></MyCard>
+        },
+        {
+          path:'allusers',
+          element:<AllUsers></AllUsers>
         }
       ]
     }
