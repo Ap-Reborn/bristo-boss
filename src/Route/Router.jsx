@@ -45,7 +45,7 @@ import MyCard from "../Pages/DashBoard/MyCard/MyCard";
     },
     {
       path:'dashboard',
-      element:<DashBoard></DashBoard>,
+      element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
       children:[
         {
           path:'mycard',
