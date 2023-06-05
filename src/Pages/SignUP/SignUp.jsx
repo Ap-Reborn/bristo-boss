@@ -5,53 +5,54 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
-  const { register, handleSubmit ,reset, watch, formState: { errors } } = useForm();
-  const {createUser, updateUserProfile}=useContext(AuthContext);
-const navigate=useNavigate()
+  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate()
   const onSubmit = data => {
     console.log(data);
-    createUser(data.email,data.password)
-    .then(result => {
-      const loggedUser =result.user;
-      console.log(loggedUser);
-      updateUserProfile(data.name,data.photoURL)
-      .then(()=>{
-        // console.log('user profile info updated')
-        const saveUser={name:data.name,email:data.email}
-        fetch('http://localhost:5000/users',{
-          method:'POST',
-          headers:{
-          'content-type':'application/json'
-          },
-          body:JSON.stringify(saveUser)
-        })
-        .then(res=>res.json())
-        .then(data =>{
-          if(data.insertedId){
-            reset();
-            Swal.fire({
-             position: 'top-end',
-             icon: 'success',
-             title: 'Your work has been saved',
-             showConfirmButton: false,
-             timer: 1500
-           })
+    createUser(data.email, data.password)
+      .then(result => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        updateUserProfile(data.name, data.photoURL)
+          .then(() => {
+            // console.log('user profile info updated')
+            const saveUser = { name: data.name, email: data.email }
+            fetch('http://localhost:5000/users', {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify(saveUser)
+            })
+              .then(res => res.json())
+              .then(data => {
+                if (data.insertedId) {
+                  reset();
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+                  navigate('/')
 
-          }
-        })
-  navigate('/')
+                }
+              })
+          })
+          .catch(error => console.log(error))
       })
-      .catch(error => console.log(error))
-    })
   }
   console.log(watch("example"));
   return (
     <>
-         <Helmet>
-                <title>Bristo | sign up</title>
-            </Helmet>
+      <Helmet>
+        <title>Bristo | sign up</title>
+      </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
@@ -105,6 +106,7 @@ const navigate=useNavigate()
               </div>
             </form>
             <p><small>Already Have An Account <Link to='/login'>log in</Link></small></p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>
