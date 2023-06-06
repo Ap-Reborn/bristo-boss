@@ -39,6 +39,7 @@ const MyCard = () => {
             }
         })
     }
+    console.log(card);
     return (
 
         <div className="w-full">
