@@ -60,7 +60,8 @@ import AdminRoute from "./AdminRoute";
         },
         {
           path:'addItem',
-          element:<AdminRoute><AddItem></AddItem></AdminRoute>
+          // element:<AdminRoute><AddItem></AddItem></AdminRoute>
+          element:<AddItem></AddItem>
         }
       ]
     }
