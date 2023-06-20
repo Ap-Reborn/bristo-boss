@@ -26,6 +26,7 @@ const AddItem = () => {
                     const { name, price, category, recipe } = data;
                     const newItem = { name, price: parseFloat(price), category, recipe, image: imgURL }
                     console.log(newItem)
+                    // img upload to imgdb 
                     axiosSecure.post('/menu', newItem)
                         .then(data => {
                             console.log('after posting new menu item', data.data)
