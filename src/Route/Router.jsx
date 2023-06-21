@@ -15,6 +15,7 @@ import AllUsers from "../Pages/DashBoard/MyCard/AllUsers/AllUsers";
 import AddItem from "../Pages/DashBoard/AddItem/AddItem";
 import AdminRoute from "./AdminRoute";
 import ManageItem from "../Pages/DashBoard/ManageItem/ManageItem";
+import Payment from "../Pages/DashBoard/Payment/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -56,8 +57,13 @@ export const router = createBrowserRouter([
         element: <MyCard></MyCard>
       },
       {
+        path:'payment',
+        element:<Payment></Payment>
+      },
+      // admin route
+      {
         path: 'allusers',
-        element: <AllUsers></AllUsers>
+        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
       },
       {
         path: 'addItem',
@@ -68,7 +74,7 @@ export const router = createBrowserRouter([
         path: 'manageitems',
         // element: <AdminRoute><ManageItem></ManageItem></AdminRoute>,
         element: <ManageItem></ManageItem>
-      }
+      },
     ]
   }
 ]);
