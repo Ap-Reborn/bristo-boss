@@ -1,10 +1,16 @@
 // import React from 'react';
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-
+import { useState } from "react";
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    // const { user } = useAuth();
+    // const [axiosSecure] = useAxiosSecure()
+    const [cardError, setCardError] = useState('');
+    // const [clientSecret, setClientSecret] = useState('');
+    // const [processing, setProcessing] = useState(false);
+    // const [transactionId, setTransactionId] = useState('');
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!stripe || !elements) {
@@ -14,6 +20,24 @@ const CheckoutForm = () => {
         if (card === null) {
             return
         }
+        // console.log('card',card)
+
+        const { error} = await stripe.createPaymentMethod({
+            type: 'card',
+            card
+        })
+
+
+        if (error) {
+            console.log('error', error)
+            setCardError(error.message);
+        }
+        else {
+            setCardError('');
+            // console.log('payment method', paymentMethod)
+        }
+
+        // setProcessing(true)
 
     }
     return (
@@ -37,9 +61,12 @@ const CheckoutForm = () => {
                 />
                 {/* <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret || processing}>
                     Pay
-                </button> */}
+                </button>  */}
+                <button className="btn btn-primary btn-sm mt-4" type="submit">
+                    Pay
+                </button>
             </form>
-            {/* {cardError && <p className="text-red-600 ml-8">{cardError}</p>} */}
+            {cardError && <p className="text-red-600 ml-8">{cardError}</p>}
             {/* {transactionId && <p className="text-green-500">Transaction complete with transactionId: {transactionId}</p>} */}
         </>
     );
