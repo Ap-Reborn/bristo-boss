@@ -1,19 +1,18 @@
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '../Provider/AuthProvider';
+import {  useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useAuth from './useAuth';
 // import useAuth from './useAuth';
-
+// ai nic do line 80.9 a upor a tula hoica 
+const axiosSecure = axios.create({
+  baseURL: 'http://localhost:5000', 
+});
 
 const useAxiosSecure = () => {
   const { logOut } = useAuth();
   const navigate = useNavigate(); 
-
-  const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000', 
-  });
-
+  
+  
   useEffect(() => {
     axiosSecure.interceptors.request.use((config) => {
       const token = localStorage.getItem('access-token');
