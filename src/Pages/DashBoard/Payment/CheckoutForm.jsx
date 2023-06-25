@@ -2,15 +2,29 @@
 
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
-const CheckoutForm = ({price}) => {
+import useAxiosSecure from "../../../hooks/useAxiouSecure";
+import { useEffect } from "react";
+import useAuth from "../../../hooks/useAuth";
+const CheckoutForm = ({ price }) => {
     const stripe = useStripe();
     const elements = useElements();
-    // const { user } = useAuth();
-    // const [axiosSecure] = useAxiosSecure()
+    const { user } = useAuth();
+    const [axiosSecure] = useAxiosSecure()
     const [cardError, setCardError] = useState('');
-    // const [clientSecret, setClientSecret] = useState('');
+    const [clientSecret, setClientSecret] = useState('');
     // const [processing, setProcessing] = useState(false);
     // const [transactionId, setTransactionId] = useState('');
+
+    useEffect(() => {
+        if (price > 0) {
+            axiosSecure.post('/create-payment-intent', { price })
+                .then(res => {
+                    console.log(res.data.clientSecret)
+                    setClientSecret(res.data.clientSecret);
+                })
+        }
+    }, [price, axiosSecure])
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!stripe || !elements) {
@@ -22,7 +36,7 @@ const CheckoutForm = ({price}) => {
         }
         // console.log('card',card)
 
-        const { error} = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card
         })
@@ -38,6 +52,23 @@ const CheckoutForm = ({price}) => {
         }
 
         // setProcessing(true)
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        email: user?.email || 'unknown',
+                        name: user?.displayName || 'anonymous'
+                    },
+                },
+            },
+        );
+        if (confirmError) {
+            console.log(confirmError);
+        }
+        console.log(paymentIntent);
 
     }
     return (
@@ -59,10 +90,7 @@ const CheckoutForm = ({price}) => {
                         },
                     }}
                 />
-                {/* <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret || processing}>
-                    Pay
-                </button>  */}
-                <button className="btn btn-primary btn-sm mt-4" type="submit">
+                <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
             </form>
